@@ -72,7 +72,7 @@ if (isset($_POST['exportar'])) {
             <div class="sidebar-sticky">
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <a class="nav-link active" href="#">
+                        <a class="nav-link active" href="../dasboards/admin_dashboard.php">
                             <i class="fas fa-tachometer-alt mr-2"></i>Panel de Administración
                         </a>
                     </li>
@@ -87,7 +87,12 @@ if (isset($_POST['exportar'])) {
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="../admin/asistencias.php">
+                        <a class="nav-link" href="../admin/perfil.php">
+                            <i class="fas fa-calendar-check mr-2"></i>Perfil
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
                             <i class="fas fa-calendar-check mr-2"></i>Asistencias
                         </a>
                     </li>
