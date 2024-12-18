@@ -1,10 +1,16 @@
 <?php 
 session_start();  
+include '../db.php';
 // Verificar autenticación y rol de admin 
 if (!isset($_SESSION['usuario_id']) || $_SESSION['rol_id'] != 1) {     
     header("Location: ../login.php");     
     exit(); 
 } 
+$usuario_id = $_SESSION['usuario_id'];
+$query = "SELECT * FROM usuarios WHERE id = '$usuario_id'";
+$result = mysqli_query($conn, $query);
+$administrador = mysqli_fetch_assoc($result);
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -13,7 +19,6 @@ if (!isset($_SESSION['usuario_id']) || $_SESSION['rol_id'] != 1) {
     <title>Panel de Administrador</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <link rel="stylesheet" href="../css/admin.css">
 </head>
 <body>
 <div class="container-fluid">
@@ -59,26 +64,27 @@ if (!isset($_SESSION['usuario_id']) || $_SESSION['rol_id'] != 1) {
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                 <h1 class="h2">Panel de Administrador</h1>
+                <h3 class="text-center">Bienvenido, <?php echo $administrador['nombre']; ?></h3>
             </div>
 
             <div class="row">
                 <div class="col-md-4">
                     <div class="card text-white bg-primary mb-3">
-                        <div class="card-header">Usuarios Registrados</div>
+                        <div class="card-header"><a href="../admin/usuarios.php" class="btn-primary">Usuarios Registrados</a></div>
                         <div class="card-body">
                             <?php
                             require_once '../db.php';
                             $result = $conn->query("SELECT COUNT(*) as total FROM usuarios");
                             $row = $result->fetch_assoc();
                             echo "<h5 class='card-title'>" . $row['total'] . " Usuarios</h5>";
-                            ?>
+                            ?><a href="../admin/usuarios.php"></a>
                         </div>
                     </div>
                 </div>
 
                 <div class="col-md-4">
                     <div class="card text-white bg-success mb-3">
-                        <div class="card-header">Practicantes</div>
+                        <div class="card-header"><a href="../admin/practicantes.php" class="btn-success">Practicantes</a></div>
                         <div class="card-body">
                             <?php
                             $result = $conn->query("SELECT COUNT(*) as total FROM usuarios WHERE rol_id = 3");
@@ -91,7 +97,7 @@ if (!isset($_SESSION['usuario_id']) || $_SESSION['rol_id'] != 1) {
 
                 <div class="col-md-4">
                     <div class="card text-white bg-info mb-3">
-                        <div class="card-header">Asistencias Hoy</div>
+                        <div class="card-header"><a href="../admin/asistencias.php" class="btn-info">Asistencias Hoy</a></div>
                         <div class="card-body">
                             <?php
                             $result = $conn->query("SELECT COUNT(*) as total FROM asistencia WHERE fecha = CURDATE()");

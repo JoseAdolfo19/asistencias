@@ -53,30 +53,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <title>Registro de Usuarios</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
-        body {
-            background: url('img/imagen.jpg') no-repeat center center fixed;
-            background-size: cover;
-            height: 100vh;
-        }
-        .login-card {
-            background: rgba(0, 0, 0, 0.6); /* Fondo oscuro y semi-transparente para el formulario */
-            padding: 30px;
-            border-radius: 10px;
-        }
-        .card-header {
-            text-align: center;
-            font-size: 24px;
-        }
-    </style>
+    <link rel="stylesheet" href="../css/registrar.css">
 </head>
 <body>
-<div class="container mt-5">
+<div class="container mt-4">
     <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card">
+        <div class="col-md-8">
+            <div class="card register-card">
                 <div class="card-header">Registro de Usuarios</div>
-                <div class="card-body">
+                <div class="card-body col">
                     <?php
                     if (!empty($error)) {
                         echo "<div class='alert alert-danger'>$error</div>";
@@ -86,23 +71,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     }
                     ?>
                     <form method="POST" action="">
-                        <div class="form-group">
+                        <div class="col-auto">
                             <label>Nombre Completo</label>
                             <input type="text" name="nombre" class="form-control" required>
                         </div>
-                        <div class="form-group">
+                        <div class="col-auto">
                             <label>Correo Electrónico</label>
                             <input type="email" name="correo" class="form-control" required>
                         </div>
-                        <div class="form-group">
+                        <div class="col-auto">
                             <label>Contraseña</label>
                             <input type="password" name="password" class="form-control" required>
                         </div>
-                        <div class="form-group">
+                        <div class="col-auto">
                             <label>Confirmar Contraseña</label>
                             <input type="password" name="confirm_password" class="form-control" required>
                         </div>
-                        <div class="form-group">
+                        <div class="col-auto">
                             <label>Rol</label>
                             <select name="rol" class="form-control" required>
                                 <option value="">Seleccione un rol</option>
@@ -110,11 +95,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <option value="2">Supervisor</option>
                                 <option value="3">Practicante</option>
                             </select>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Registrarse</button>
+                        </div><br>
+                        <button type="submit" class="btn btn-primary btn-block col-auto ">Registrarse</button>
                     </form>
+                    <br>
+                    <p><input type="checkbox" name="terminos" id="terminos">Acepta los <a href="#">terminos</a> y <a href="#">condiciones</a></p>
                     <div class="mt-3">
-                        <p>¿Ya tienes una cuenta? <a href="login.php">Iniciar Sesión</a></p>
+                        <p class="text-center">¿Ya tienes una cuenta? <a href="login.php">Iniciar Sesión</a></p>
                     </div>
                 </div>
             </div>

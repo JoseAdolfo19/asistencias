@@ -1,68 +1,153 @@
 <?php
+session_start();
+if (!isset($_SESSION['usuario_id']) || $_SESSION['rol_id'] != 2) {
+    header("Location: ../login.php");
+    exit();
+}
 require_once '../db.php';
 
-// Validación de columnas permitidas
-$allowed_columns = ['fecha', 'practicante_id'];
-$order_by = isset($_GET['order_by']) && in_array($_GET['order_by'], $allowed_columns) ? $_GET['order_by'] : 'fecha';
+if (isset($_POST['exportar'])) {
+    $data = array();
+    $query= "SELECT u.nombre, a.fecha, a.hora_entrada, a.hora_salida,
+       CASE WHEN a.hora_entrada IS NOT NULL AND a.hora_salida IS NOT NULL THEN 'Completada' ELSE 'Incompleta' END AS estado
+       FROM asistencia a
+       JOIN usuarios u ON a.usuario_id = u.id
+       ORDER BY a.fecha DESC;";
 
-// Consulta principal con el ORDER BY seguro
-$query = "
-    SELECT a.id, p.nombre, p.correo, a.fecha, a.hora_entrada, a.hora_salida
-    FROM asistencia a
-    JOIN practicantes p ON a.practicante_id = p.id
-    ORDER BY $order_by ASC
-";
-$result = $conn->query($query);
+    $result = mysqli_query($conn, $query);
 
+    while ($row = mysqli_fetch_assoc($result)) {
+        $data[] = $row;
+    }
+
+    header("Content-Type: application/vnd.ms-excel");
+    header("Content-Disposition: attachment; filename=asistencia.xls");
+    header("Pragma: no-cache");
+    header("Expires: 0");
+
+    echo "<table border='1'>";
+    echo "<tr>
+            <th>Practicante ID</th>
+            <th>Fecha</th>
+            <th>Hora de Entrada</th>
+            <th>Hora de Salida</th>
+            <th>Estado</th>
+          </tr>";
+
+    foreach ($data as $fila) {
+        $hora_entrada = $fila['hora_entrada'] ?? null;
+        $hora_salida = $fila['hora_salida'] ?? null;
+
+        $estado = (!empty($hora_entrada) && !empty($hora_salida)) ? 'Completa' : 'Incompleta';
+
+        echo "<tr>";
+        echo "<td>{$fila['nombre']}</td>";
+        echo "<td>{$fila['fecha']}</td>";
+        echo "<td>{$hora_entrada}</td>";
+        echo "<td>{$hora_salida}</td>";
+        echo "<td>{$estado}</td>";
+        echo "</tr>";
+    }
+    echo "</table>";
+
+    exit;
+}
 ?>
-<h2 class="text-center">Reportes</h2>
 
-<!-- Selector de Ordenamiento -->
-<div class="row mb-3 w-25 mx-auto text-center p-4">
-    <div class="col-md-6">
-        <form method="GET" class="d-flex align-items-center">
-            <label for="order-by" class="me-2">Ordenar por:</label>
-            <select name="order_by" id="order-by" class="form-select w-auto" onchange="this.form.submit()">
-                <?php 
-                $order_options = [
-                    'fecha' => 'Fecha',
-                    'practicante_id' => 'ID del Practicante'
-                ];
-                foreach ($order_options as $key => $label): ?>
-                    <option value="<?php echo htmlspecialchars($key); ?>" 
-                        <?php echo $order_by === $key ? 'selected' : ''; ?>>
-                        <?php echo htmlspecialchars($label); ?>
-                    </option>
-                <?php endforeach; ?>
-            </select>
-        </form>
+
+
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Registro de Asistencias</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+            <div class="sidebar-sticky">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="../dasboards/supervisor_dashboard.php">
+                            <i class="fas fa-tachometer-alt mr-2"></i>Panel de Supervisor
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../supervisor/usuarios.php">
+                            <i class="fas fa-users mr-2"></i>Gestión de Usuarios
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="fas fa-calendar-check mr-2"></i>Asistencias
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-danger" href="../logout.php">
+                            <i class="fas fa-sign-out-alt mr-2"></i>Cerrar Sesión
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <main class="col-md-9 ml-sm-auto col-lg-10 px-4">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h2">Registro de Asistencias</h1>
+                <div>
+                    <form method="post" style="display:inline;">
+                        <button type="submit" name="exportar" class="btn btn-outline-primary"><i class="fas fa-download"></i>     Exportar a XLSX</button>
+                    </form>
+                </div>           
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Practicante</th>
+                            <th>Fecha</th>
+                            <th>Hora Entrada</th>
+                            <th>Hora Salida</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        $query = "SELECT a.*, u.nombre 
+                                  FROM asistencia a 
+                                  JOIN usuarios u ON a.usuario_id = u.id 
+                                  ORDER BY a.fecha DESC";
+                        $result = $conn->query($query);
+                        while($asistencia = $result->fetch_assoc()) {
+                            $estado = ($asistencia['hora_entrada'] && $asistencia['hora_salida']) 
+                                      ? 'Completada' : 'Incompleta';
+                            $estadoClass = $estado == 'Completada' ? 'success' : 'warning';
+                            $hora_salida = $asistencia['hora_salida'] ? $asistencia['hora_salida'] : 'No registrada';
+
+                            echo "<tr>
+                                    <td>{$asistencia['nombre']}</td>
+                                    <td>{$asistencia['fecha']}</td>
+                                    <td>{$asistencia['hora_entrada']}</td>
+                                    <td>{$hora_salida}</td>
+                                    <td>
+                                        <span class='badge badge-{$estadoClass}'>{$estado}</span>
+                                    </td>
+                                  </tr>";
+                        }
+                        ?>
+                    </tbody>
+                </table>
+            </div>
+        </main>
     </div>
 </div>
 
-<!-- Tabla de Asistencias -->
-<table cellspacing="0" cellpadding="5">
-    <tr>
-        <th>N°</th>
-        <th>Nombre del Practicante</th>
-        <th>Correo</th>
-        <th>Fecha</th>
-        <th>Hora de Entrada</th>
-        <th>Hora de Salida</th>
-    </tr>
-    <?php if ($result && $result->num_rows > 0): ?>
-        <?php while ($row = $result->fetch_assoc()): ?>
-            <tr>
-                <td><?= htmlspecialchars($row['id']); ?></td>
-                <td><?= htmlspecialchars($row['nombre']); ?></td>
-                <td><?= htmlspecialchars($row['correo']); ?></td>
-                <td><?= htmlspecialchars($row['fecha']); ?></td>
-                <td><?= htmlspecialchars($row['hora_entrada']); ?></td>
-                <td><?= $row['hora_salida'] ? htmlspecialchars($row['hora_salida']) : 'No registrada'; ?></td>
-            </tr>
-        <?php endwhile; ?>
-    <?php else: ?>
-        <tr>
-            <td colspan="6">No hay registros disponibles.</td>
-        </tr>
-    <?php endif; ?>
-</table>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

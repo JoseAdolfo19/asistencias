@@ -51,29 +51,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <title>Iniciar Sesión</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
-        body {
-            background: url('img/imagen.jpg') no-repeat center center fixed; 
-            background-size: cover;
-            height: 100vh;
-            color: white;
-        }
-        .login-card {
-            background: rgba(0, 0, 0, 0.6); /* Fondo oscuro y semi-transparente para el formulario */
-            padding: 30px;
-            border-radius: 10px;
-        }
-        .card-header {
-            text-align: center;
-            font-size: 24px;
-            color: #fff;
-        }
-        .btn-primary {
-            background-color: #4CAF50;
-            border: none;
-        }
-        .form-group label {
-            color: #fff;
-        }
+        
+body {
+    background: url('../img/imagen.jpg') no-repeat center center fixed; 
+    background-size: cover;
+    height: 100vh;
+    color: white;
+}
+.login-card {
+    background: rgba(0, 0, 0, 0.6); /* Fondo oscuro y semi-transparente para el formulario */
+    padding: 30px;
+    border-radius: 10px;
+}
+.card-header {
+    text-align: center;
+    font-size: 24px;
+    color: #fff;
+}
+.btn-primary {
+    background-color: #4CAF50;
+    border: none;
+}
+.form-group label {
+    color: #fff;
+}
+
     </style>
 </head>
 <body>
@@ -90,17 +92,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     ?>
                     <form method="POST" action="">
                         <div class="form-group">
-                            <label>Correo Electrónico</label>
+                            <label>Correo Electrónico:</label>
                             <input type="email" name="correo" class="form-control" required>
                         </div>
                         <div class="form-group">
-                            <label>Contraseña</label>
+                            <label>Contraseña:</label>
                             <input type="password" name="password" class="form-control" required>
-                        </div>
+                        </div><br>
                         <button type="submit" class="btn btn-primary btn-block">Iniciar Sesión</button>
                     </form>
+                    <br>
+                    <p><input type="checkbox" name="terminos" id="terminos">Acepta los <a href="#">terminos</a> y <a href="#">condiciones</a></p>
                     <div class="mt-3">
-                        <p>¿No tienes una cuenta? <a href="registra_sesion.php" style="color: #fff;">Registrarse</a></p>
+
+                        <p class="text-center">¿No tienes una cuenta? <a href="registra_sesion.php">Registrarse</a></p>
                     </div>
                 </div>
             </div>

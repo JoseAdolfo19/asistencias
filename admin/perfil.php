@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <header>
         <div class="sidebar">
             <h4 class="text-center">Menú</h4>
-            <a href="../dasboards/practicante_dashboard.php"><i class="fas fa-home"></i> Inicio</a>
+            <a href="../dasboards/admin_dashboard.php"><i class="fas fa-home"></i> Inicio</a>
             <a href="#"><i class="fas fa-user"></i> Perfil</a>
             <a href="../logout.php"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>
         </div>

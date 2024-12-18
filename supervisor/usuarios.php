@@ -1,6 +1,6 @@
 <?php 
 session_start();  
-if (!isset($_SESSION['usuario_id']) || $_SESSION['rol_id'] != 1) {     
+if (!isset($_SESSION['usuario_id']) || $_SESSION['rol_id'] != 2) {     
     header("Location: ../login.php");     
     exit(); 
 } 
@@ -35,17 +35,12 @@ if (isset($_GET['id'])) {
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="../admin/usuarios.php">
+                        <a class="nav-link" href="#">
                             <i class="fas fa-users mr-2"></i>Gestión de Usuarios
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="../admin/practicantes.php">
-                            <i class="fas fa-user-graduate mr-2"></i>Practicantes
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="../admin/asistencias.php">
+                        <a class="nav-link" href="lista_asistencias.php">
                             <i class="fas fa-calendar-check mr-2"></i>Asistencias
                         </a>
                     </li>
@@ -60,11 +55,7 @@ if (isset($_GET['id'])) {
         <main class="col-md-9 ml-sm-auto col-lg-10 px-4">
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                 <h1 class="h2">Gestión de Usuarios</h1>
-                <button class="btn btn-primary" data-toggle="modal" data-target="#nuevoUsuarioModal">
-                    <i class="fas fa-plus"></i> Nuevo Usuario
-                </button>
-                <a href="../dasboards/admin_dashboard.php" class="btn btn-outline-success">Volver al Panel</a>
-
+                <a href="../dasboards/supervisor_dashboard.php" class="btn btn-outline-success">Volver al Panel</a>
             </div>
 
             <div class="table-responsive">
