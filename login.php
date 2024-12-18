@@ -102,7 +102,7 @@ body {
                         <button type="submit" class="btn btn-primary btn-block">Iniciar Sesión</button>
                     </form>
                     <br>
-                    <p><input type="checkbox" name="terminos" id="terminos">Acepta los <a href="#">terminos</a> y <a href="#">condiciones</a></p>
+                    <p><input type="checkbox" name="terminos" id="terminos">Acepta los <a href="#">terminos</a> y <a href="#">condiciones</a>(opcional)</p>
                     <div class="mt-3">
 
                         <p class="text-center">¿No tienes una cuenta? <a href="registra_sesion.php">Registrarse</a></p>

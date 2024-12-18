@@ -99,7 +99,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <button type="submit" class="btn btn-primary btn-block col-auto ">Registrarse</button>
                     </form>
                     <br>
-                    <p><input type="checkbox" name="terminos" id="terminos">Acepta los <a href="#">terminos</a> y <a href="#">condiciones</a></p>
+                    <p><input type="checkbox" name="terminos" id="terminos">Acepta los <a href="#">terminos</a> y <a href="#">condiciones</a>(opcional)</p>
                     <div class="mt-3">
                         <p class="text-center">¿Ya tienes una cuenta? <a href="login.php">Iniciar Sesión</a></p>
                     </div>
