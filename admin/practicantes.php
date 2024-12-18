@@ -19,6 +19,8 @@ if (isset($_GET['id'])) {
     <title>Gestión de Practicantes</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="../css/practicante.css">  
+
 </head>
 <body>
 <div class="container-fluid">
@@ -26,31 +28,12 @@ if (isset($_GET['id'])) {
         <nav class="col-md-2 d-none d-md-block bg-light sidebar">
             <div class="sidebar-sticky">
                 <ul class="nav flex-column">
-                <li class="nav-item">
-                        <a class="nav-link active" href="#">
-                            <i class="fas fa-tachometer-alt mr-2"></i>Panel de Administración
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="../admin/usuarios.php">
-                            <i class="fas fa-users mr-2"></i>Gestión de Usuarios
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="../admin/practicantes.php">
-                            <i class="fas fa-user-graduate mr-2"></i>Practicantes
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="../admin/asistencias.php">
-                            <i class="fas fa-calendar-check mr-2"></i>Asistencias
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-danger" href="../logout.php">
-                            <i class="fas fa-sign-out-alt mr-2"></i>Cerrar Sesión
-                        </a>
-                    </li>
+                <a href="../dasboards/admin_dashboard.php"><i class="fas fa-tachometer-alt mr-2"></i>Panel de Administración</a>
+                <a href="usuarios.php"><i class="fas fa-users mr-2"></i> Gestion de Usuarios</a>
+                <a href="#"><i class="fas fa-user-graduate mr-2"></i> Practicantes</a>
+                <a href="perfil.php"><i class="fas fa-user"></i> Perfil</a>
+                <a href="asistencias.php"> <i class="fas fa-calendar-check mr-2"></i>Asistencias</a>
+                <a href="../logout.php"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>
                 </ul>
             </div>
         </nav>
