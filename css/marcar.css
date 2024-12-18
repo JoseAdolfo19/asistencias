@@ -1,0 +1,53 @@
+body {
+    font-family: Arial, sans-serif;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+}
+
+.mensaje {
+    margin: 20px 0;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.mensaje.exito {
+    background-color: #dff0d8;
+    color: #3c763d;
+}
+
+.mensaje.error {
+    background-color: #f2dede;
+    color: #a94442;
+}
+
+.botones {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.boton {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+}
+
+.boton-entrada {
+    background-color: #5cb85c;
+    color: white;
+}
+
+.boton-salida {
+    background-color: #d9534f;
+    color: white;
+}
+
+.boton:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
